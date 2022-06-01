@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Table } from "reactstrap";
 import { api } from "../../services/api";
 
-export default function ListarClientes(){
+export default function ListarClientes(props){
 
     const [clientes, setClientes] = useState([]);
 
@@ -15,6 +15,10 @@ export default function ListarClientes(){
         setClientes(response.data);
     }
 
+    function goToDetails(id){
+        props.navegar(`/info/${id}`);
+    }
+
     return(
         <Table striped bordered>
             <thead>
@@ -25,6 +29,7 @@ export default function ListarClientes(){
                     <th scope="col">Altura</th>
                     <th scope="col">Sexo</th>
                     <th scope="col">IMC</th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
@@ -37,6 +42,7 @@ export default function ListarClientes(){
                             <td>{cliente.altura}</td>
                             <td>{cliente.sexo}</td>
                             <td>{cliente.imc.toFixed(2)}</td>
+                            <td><button onClick={()=>{goToDetails(cliente.id)}}>Detalhes</button></td>
                         </tr>
                     );
                 })}
